@@ -9,6 +9,7 @@ root.geometry("1200x6000")
 root.title("A-Z Message Encryptor - Arpit Jain")
 
 star = StringVar()
+star1 = StringVar()
 # frames
 Tops = Frame(root, relief=FLAT)
 Tops.pack(side=TOP, pady = 10)
@@ -87,15 +88,19 @@ L2I = dict(zip("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",range(52))
 I2L = dict(zip(range(52),"ZYXWVUTSRQPONMLKJIHGFEDCBAzyxwvutsrqponmlkjihgfedcba"))
 
 # encryption function
-def Ref():
+def Ref(esult=None):
     clear = textBox1.get("1.0",END)
-    esult = ""
-    for c in clear:
-        if c.isalpha(): esult += I2L[ (L2I[c]) ] ##If condition is whether c is alphabet or not
-        else: esult += c
-    textBox2.delete(1.0, END)
-    textBox2.insert(INSERT,esult)
-    star.set(esult)
+    if clear != star1.get():
+        esult = ""
+        for c in clear:
+            if c.isalpha(): esult += I2L[ (L2I[c]) ] ##If condition is whether c is alphabet or not
+            else: esult += c
+        textBox2.config(state = NORMAL)
+        textBox2.delete("1.0", END)
+        textBox2.insert(INSERT,esult)
+        textBox2.config(state = DISABLED)
+        star1.set(clear)
+        star.set(esult)
     textBox1.after(100,Ref)
 
 # keeps window alive
