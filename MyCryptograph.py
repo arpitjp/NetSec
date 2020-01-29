@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter.filedialog import askopenfile
 from tkinter.filedialog import asksaveasfile
+import tkinter.scrolledtext as scrolledtext
 import pyperclip
 
 root = Tk()
@@ -16,9 +17,6 @@ Tops.pack(side=TOP, pady = 10)
 
 fbutton = Frame(root)
 fbutton.pack(side = TOP, pady = 10, padx = 20)
-
-flabel = Frame(root)
-flabel.pack(side = TOP, pady = 10, padx = 20)
 
 ftext = Frame(root)
 ftext.pack(pady = 5, expand = 1)
@@ -77,10 +75,10 @@ lbl2.grid(row=0, column=1)
 
 
 # text boxes
-textBox1=Text(ftext, height=50, width=50, bg = "powder blue", font=('arial', 16, 'bold'))
+textBox1=Text(ftext, height=18, width=50, bg = "powder blue", font=('arial', 16, 'bold'))
 textBox1.grid(row=1, column=0, padx=20)
 
-textBox2=Text(ftext, height=50, width=50, bg = "powder blue", font=('arial', 16, 'bold'))
+textBox2=Text(ftext, height=18, width=50, bg = "powder blue", font=('arial', 16, 'bold'))
 textBox2.grid(row=1, column=1, padx = 20)
 
 # encryption logic
