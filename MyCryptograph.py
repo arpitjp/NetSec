@@ -67,10 +67,10 @@ def save():
 btnSaveFile = Button(fbutton, fg="white", font=('arial', 16, 'bold'), width=5, text="Save as", bg="orange", command=lambda: save(), padx = 50).grid(row=1, column=3, padx = 10)
 
 # label
-lbl1 = Label(ftext, font=('arial', 16, 'bold'), text="Input here", bd=16, anchor="w")
+lbl1 = Label(ftext, font=('arial', 18, 'bold'), text="Input here", bd=16, anchor="w")
 lbl1.grid(row=0, column=0)
 
-lbl2 = Label(ftext, font=('arial', 16, 'bold'), text="Output here", bd=16, anchor="w")
+lbl2 = Label(ftext, font=('arial', 18, 'bold'), text="Output here", bd=16, anchor="w")
 lbl2.grid(row=0, column=1)
 
 
@@ -93,6 +93,7 @@ def Ref(esult=None):
         for c in clear:
             if c.isalpha(): esult += I2L[ (L2I[c]) ] ##If condition is whether c is alphabet or not
             else: esult += c
+        esult = esult.rstrip()
         textBox2.config(state = NORMAL)
         textBox2.delete("1.0", END)
         textBox2.insert(INSERT,esult)
@@ -104,4 +105,3 @@ def Ref(esult=None):
 # keeps window alive
 Ref()
 root.mainloop()
-
