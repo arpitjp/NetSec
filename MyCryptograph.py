@@ -9,16 +9,55 @@ root.geometry("1200x6000")
 #root["bg"] = "black"
 root.title("A-Z Message Encryptor - Arpit Jain")
 
+# variables, StringVar
 star = StringVar()
 star1 = StringVar()
+
+########################################################################################
+# main window scrollbar
+class AutoScrollbar(Scrollbar):
+    # a scrollbar that hides itself if it's not needed.  only
+    # works if you use the grid geometry manager.
+    def set(self, lo, hi):
+        if float(lo) <= 0.0 and float(hi) >= 1.0:
+            # grid_remove is currently missing from Tkinter!
+            self.tk.call("grid", "remove", self)
+        else:
+            self.grid()
+        Scrollbar.set(self, lo, hi)
+    def pack(self, **kw):
+        raise TclError("cannot use pack with this widget")
+    def place(self, **kw):
+        raise TclError("cannot use place with this widget")
+
+vscrollbar = AutoScrollbar(root)
+vscrollbar.grid(row=0, column=1, sticky=N+S)
+hscrollbar = AutoScrollbar(root, orient=HORIZONTAL)
+hscrollbar.grid(row=1, column=0, sticky=E+W)
+
+canvas = Canvas(root, yscrollcommand=vscrollbar.set, xscrollcommand=hscrollbar.set)
+canvas.grid(row=0, column=0, sticky=N+S+E+W)
+
+vscrollbar.config(command=canvas.yview)
+hscrollbar.config(command=canvas.xview)
+
+# make the canvas expandable
+root.grid_rowconfigure(0, weight=1)
+root.grid_columnconfigure(0, weight=1)
+
+frame = Frame(canvas)
+frame.rowconfigure(1, weight=1)
+frame.columnconfigure(1, weight=1)
+######################################################################################
+
 # frames
-Tops = Frame(root, relief=FLAT)
+Tops = Frame(frame, relief=FLAT)
 Tops.pack(side=TOP, pady = 10)
 
-fbutton = Frame(root)
+fbutton = Frame(frame)
 fbutton.pack(side = TOP, pady = 10, padx = 20)
 
-ftext = Frame(root)
+ftext = Frame(frame)
 ftext.pack(pady = 5, expand = 1)
 
 # title
@@ -38,6 +77,7 @@ def qExit():
 # Exit button
 btnExit = Button(fbutton, fg="white", font=('arial', 16, 'bold'), width=5, text="Exit", bg="red", command=qExit, padx = 50).grid(row=1, column=2, padx = 10)
 """
+
 # Copy text to clipboard button
 def copy_to_clipboard():
     #root.clipboard_clear()
@@ -101,6 +141,13 @@ def Ref(esult=None):
         star1.set(clear)
         star.set(esult)
     textBox1.after(100,Ref)
+
+# main window scrollbar
+########################################################################################
+canvas.create_window(0, 0, anchor=NW, window=frame)
+frame.update_idletasks()
+canvas.config(scrollregion=canvas.bbox("all"))
+########################################################################################
 
 # keeps window alive
 Ref()
