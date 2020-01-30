@@ -114,12 +114,18 @@ lbl2 = Label(ftext, font=('arial', 18, 'bold'), text="Output here", bd=16, ancho
 lbl2.grid(row=0, column=1)
 
 
-# text boxes
-textBox1=Text(ftext, height=18, width=50, bg = "powder blue", font=('arial', 16, 'bold'))
+# text boxes with horizontal scrollbar
+xscrollbar1 = Scrollbar(ftext, orient=HORIZONTAL)
+xscrollbar1.grid(row=2, column=0, sticky=N+S+E+W, padx = 20)
+textBox1=Text(ftext, height=18, width=50, bg = "powder blue", font=('arial', 16, 'bold'), wrap = NONE, xscrollcommand = xscrollbar1.set)
 textBox1.grid(row=1, column=0, padx=20)
+xscrollbar1.config(command=textBox1.xview)
 
-textBox2=Text(ftext, height=18, width=50, bg = "powder blue", font=('arial', 16, 'bold'))
+xscrollbar2 = Scrollbar(ftext, orient=HORIZONTAL)
+xscrollbar2.grid(row=2, column=1, sticky=N+S+E+W, padx = 20)
+textBox2=Text(ftext, height=18, width=50, bg = "powder blue", font=('arial', 16, 'bold'), wrap = NONE, xscrollcommand = xscrollbar2.set)
 textBox2.grid(row=1, column=1, padx = 20)
+xscrollbar2.config(command=textBox2.xview)
 
 # encryption logic
 L2I = dict(zip("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",range(52)))
@@ -143,7 +149,7 @@ def Ref(esult=None):
     textBox1.after(100,Ref)
 
 # main window scrollbar
-########################################################################################
+#########################################################################################
 canvas.create_window(0, 0, anchor=NW, window=frame)
 frame.update_idletasks()
 canvas.config(scrollregion=canvas.bbox("all"))
