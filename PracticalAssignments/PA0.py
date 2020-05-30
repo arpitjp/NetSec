@@ -4,6 +4,9 @@ from tkinter.filedialog import asksaveasfile
 import tkinter.scrolledtext as scrolledtext
 import pyperclip
 
+########################################################################################################################
+# SECTION 1
+########################################################################################################################
 root = Tk()
 root.geometry("1200x6000")
 #root["bg"] = "black"
@@ -13,7 +16,6 @@ root.title("A-Z Message Encryptor - Arpit Jain")
 star = StringVar()
 star1 = StringVar()
 
-########################################################################################
 # main window scrollbar
 class AutoScrollbar(Scrollbar):
     # a scrollbar that hides itself if it's not needed.  only
@@ -48,7 +50,6 @@ root.grid_columnconfigure(0, weight=1)
 frame = Frame(canvas)
 frame.rowconfigure(1, weight=1)
 frame.columnconfigure(1, weight=1)
-######################################################################################
 
 # frames
 Tops = Frame(frame, relief=FLAT)
@@ -64,26 +65,24 @@ ftext.pack(pady = 5, expand = 1)
 lblInfo = Label(Tops, font=('helvetica', 50, 'bold'), text="Cryptograph", fg="Black", bd=10, anchor='w')
 lblInfo.grid(row=0, column=0)
 
+########################################################################################################################
+# SECTION 2
+########################################################################################################################
+
+## FUNCTIONS MAPPING TO BUTTONS
 # Reset function
 def Reset():
     textBox1.delete("1.0", END)
+
 # Reset button
 btnReset = Button(fbutton, fg="white", font=('arial', 16, 'bold'), width=5, text="Reset", bg="blue", command=Reset, padx = 50).grid(row=1, column=1, padx = 10)
 
-""""
-# Exit function
-def qExit():
-    root.destroy()
-# Exit button
-btnExit = Button(fbutton, fg="white", font=('arial', 16, 'bold'), width=5, text="Exit", bg="red", command=qExit, padx = 50).grid(row=1, column=2, padx = 10)
-"""
-
 # Copy text to clipboard button
 def copy_to_clipboard():
-    #root.clipboard_clear()
     garb = star.get()
     pyperclip.copy(garb)
     pyperclip.paste()
+
 # copy button
 btnCopyToClipboard = Button(fbutton, fg="white", font=('arial', 16, 'bold'), width=5, text="Copy", bg="purple", command=lambda: copy_to_clipboard(), padx = 50).grid(row=1, column=2, padx = 10)
 
@@ -95,6 +94,7 @@ def open_file():
         content = file.read()
         file.close()
         textBox1.insert(INSERT, content)
+
 # Open text file button
 btnOpenFile = Button(fbutton, fg="white", font=('arial', 16, 'bold'), width=5, text="Open file", bg="green", command=open_file, padx = 50).grid(row=1, column=0, padx = 10)
 
@@ -103,7 +103,8 @@ def save():
     name = asksaveasfile(defaultextension=".txt", filetypes=[("Text files", ".txt"), ("Word files", ".doc"), ("All files", "*")], initialdir="dir", title="Save as")
     with open(name.name, "w") as data:
         data.write(star.get())
-# SAve file button
+
+# Save file button
 btnSaveFile = Button(fbutton, fg="white", font=('arial', 16, 'bold'), width=5, text="Save as", bg="orange", command=lambda: save(), padx = 50).grid(row=1, column=3, padx = 10)
 
 # label
@@ -112,7 +113,6 @@ lbl1.grid(row=0, column=0)
 
 lbl2 = Label(ftext, font=('arial', 18, 'bold'), text="Output here", bd=16, anchor="w")
 lbl2.grid(row=0, column=1)
-
 
 # text boxes with horizontal scrollbar
 xscrollbar1 = Scrollbar(ftext, orient=HORIZONTAL)
@@ -126,6 +126,10 @@ xscrollbar2.grid(row=2, column=1, sticky=N+S+E+W, padx = 20)
 textBox2=Text(ftext, height=18, width=51, bg = "powder blue", font=('arial', 16, 'bold'), wrap = NONE, xscrollcommand = xscrollbar2.set)
 textBox2.grid(row=1, column=1, padx = 20)
 xscrollbar2.config(command=textBox2.xview)
+
+########################################################################################################################
+# SECTION 3
+########################################################################################################################
 
 # encryption logic
 L2I = dict(zip("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",range(52)))
@@ -148,12 +152,11 @@ def Ref(esult=None):
         star.set(esult)
     textBox1.after(100,Ref)
 
+
 # main window scrollbar
-#########################################################################################
 canvas.create_window(0, 0, anchor=NW, window=frame)
 frame.update_idletasks()
 canvas.config(scrollregion=canvas.bbox("all"))
-########################################################################################
 
 # keeps window alive
 Ref()
